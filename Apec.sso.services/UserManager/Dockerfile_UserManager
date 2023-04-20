@@ -1,0 +1,56 @@
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
+
+ARG SERVICE
+ARG PORT
+
+RUN echo "Build ARG: ${SERVICE} ${PORT}"
+
+WORKDIR /app
+EXPOSE ${PORT}
+
+# copy csproj and restore as distinct layers
+COPY *.sln .
+
+COPY Common/*.csproj ./Common/
+COPY FireHandler/*.csproj ./FireHandler/
+COPY DeviceGateway/*.csproj ./DeviceGateway/
+COPY FireInventory/*.csproj ./FireInventory/
+COPY FireBusiness/*.csproj ./FireBusiness/
+COPY AuthenServer/*.csproj ./AuthenServer/
+COPY FireReport/*.csproj ./FireReport/
+COPY FireFact/*.csproj ./FireFact/
+COPY Tests/*.csproj ./Tests/
+
+COPY FireHandler/firebase-development.json .
+COPY FireHandler/firebase-production.json .
+
+RUN dotnet restore 
+
+COPY Common/. ./Common/
+COPY DeviceGateway/. ./DeviceGateway/
+COPY FireHandler/. ./FireHandler/
+COPY FireInventory/. ./FireInventory/
+COPY FireBusiness/. ./FireBusiness/
+COPY AuthenServer/. ./AuthenServer/
+COPY FireReport/. ./FireReport/
+COPY FireFact/. ./FireFact/
+COPY Tests/. ./Tests/
+
+WORKDIR /app/${SERVICE}
+RUN dotnet publish -c Release -o out
+
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
+
+ARG SERVICE
+ARG PORT
+
+WORKDIR /app
+COPY --from=build-env /app/${SERVICE}/out .
+
+COPY FireHandler/firebase-development.json .
+COPY FireHandler/firebase-production.json .
+
+ENV ASPNETCORE_URLS=http://+:${PORT}
+ENV SERVICE=$SERVICE
+
+ENTRYPOINT dotnet ${SERVICE}.dll

@@ -1,0 +1,156 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+    background-color: beige;
+    background-image: linear-gradient( rgb(179, 179, 157),beige );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin-top: 60px;*/
+}
+
+body {
+    /* margin-top: 60px;*/
+/*    min-height: 100vh;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+/*.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}*/
+.root {
+    background-color: aliceblue;
+  /*  position: relative;*/
+    height: 550px;
+    width: 400px;
+
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    box-shadow: 20px 20px 50px 15px grey;
+    border-radius: 0px;
+}
+
+img {
+    width: 300px;
+    justify-content: center;
+}
+.icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+
+.buttonLogin {
+    background-color: red; /* red */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width: 300px;
+    height: 40px;
+}
+.inputLogin {
+    width: 300px;
+    height: 40px;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+.bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+}
+.bottom2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+}
+p {
+    color: #BBBBBB;
+}

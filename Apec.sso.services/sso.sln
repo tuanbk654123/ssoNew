@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{574082C6-7291-4BE9-A09C-BF994223DDAE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sso", "SsoApecGroup\Sso.csproj", "{1FC9E585-3C40-44FF-80CF-1DA5802015AC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserManager", "UserManager\UserManager.csproj", "{2A035809-52A3-4F3C-863A-977F8995ED45}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{574082C6-7291-4BE9-A09C-BF994223DDAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{574082C6-7291-4BE9-A09C-BF994223DDAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{574082C6-7291-4BE9-A09C-BF994223DDAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{574082C6-7291-4BE9-A09C-BF994223DDAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FC9E585-3C40-44FF-80CF-1DA5802015AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FC9E585-3C40-44FF-80CF-1DA5802015AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FC9E585-3C40-44FF-80CF-1DA5802015AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FC9E585-3C40-44FF-80CF-1DA5802015AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A035809-52A3-4F3C-863A-977F8995ED45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A035809-52A3-4F3C-863A-977F8995ED45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A035809-52A3-4F3C-863A-977F8995ED45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A035809-52A3-4F3C-863A-977F8995ED45}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {91ECE2BE-105D-4508-9E21-12F682F11387}
+	EndGlobalSection
+EndGlobal

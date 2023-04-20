@@ -1,0 +1,1 @@
+docker build -f SsoApecGroup/Dockerfile -t sso:v1 .

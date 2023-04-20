@@ -1,0 +1,27 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.featuredChart .CircularProgressbar .CircularProgressbar-path{
+  stroke: #d32f2f;
+}
+
+.featuredChart .CircularProgressbar .CircularProgressbar-text{
+  fill: #d32f2f;
+}
+
+.ant-table-header .ant-table-thead>tr>th{
+  background:#ffe0e0;
+  color:#111111;
+  font-weight: 550;
+}

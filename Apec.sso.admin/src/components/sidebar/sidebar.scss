@@ -1,0 +1,122 @@
+.sidebar {
+    //flex: 1;
+    width: 200px;
+    min-height: 100vh;
+    background-color: #ffffff;
+    .top {
+        height: 15vh;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 0px;
+        padding-top: 20px;
+        background-color: #ffffff;
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #ffffff;
+        }
+    }
+
+    .hr1 {
+        height: 0;
+        //border:  0.5px solid rgb(231, 228, 228);
+    }
+
+    .center {
+        //padding-left: 10px;
+        //border-right: 0.5px solid lightgrey;
+        padding-top: 15px;
+        height: 100vh;
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+        }
+
+        .title {
+            font-size: 12px;
+            font-weight: bold;
+            color: #19427d;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            margin-left: 5px;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            padding: 25px;
+            cursor: pointer;
+            height: 40px;
+
+            &:hover {
+                background-color: #19427d;
+                border-radius: 10px;
+            }
+        }
+
+        li:hover {
+            background-color: #19427d;
+
+            .icon {
+                color: #ffffff;
+            }
+
+            span {
+                color: #ffffff;
+            }
+        }
+
+        li:hover {
+            background-color: #19427d !important;
+
+            .icon {
+                color: #ffffff !important;
+            }
+
+            span {
+                color: #ffffff !important;
+            }
+        }
+
+        .icon {
+            font-size: 20px;
+            color: #19427d;
+        }
+
+        span {
+            font-size: 13px;
+            font-weight: 600;
+            color: #19427d;
+            margin-left: 10px;
+        }
+
+    }
+
+    // .bottom{
+    //     display: flex;
+    //     align-items: center;
+    //     margin: 10px;
+
+    //     .colorOption{
+    //         width: 20px;
+    //         height: 20px;
+    //         border-radius: 5px;
+    //         margin: 5px;
+    //         border:  1px solid #dc778f;
+    //         cursor: pointer;
+
+    //         &:nth-child(1){
+    //             background-color: white;
+    //         }
+    //         &:nth-child(2){
+    //             background-color: rgb(145, 31, 31);
+    //         }
+    //     }
+    // }
+}

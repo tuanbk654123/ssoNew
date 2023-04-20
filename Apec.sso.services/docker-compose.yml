@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  ssoapecgroup:
+    image: ${DOCKER_REGISTRY-}ssoapecgroup
+    build:
+      context: .
+      dockerfile: SsoApecGroup/Dockerfile
+    ports:
+        - "5001:80"
+    networks:
+        - sso
+
+  usermanager:
+    image: ${DOCKER_REGISTRY-}usermanager
+    build:
+      context: .
+      dockerfile: UserManager/Dockerfile
+    ports:
+        - "5002:80"
+    networks:
+        - sso
+
+networks:
+  sso:

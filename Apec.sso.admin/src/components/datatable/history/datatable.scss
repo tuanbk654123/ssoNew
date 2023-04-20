@@ -1,0 +1,163 @@
+.background{
+  //display: flex;
+  background-color: #f3f4f9;
+  
+  min-height: 100vh;
+  .title{
+    width: 100%;
+    font-size: 30px;
+    font-weight: bold;
+    padding-left: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .datatable {
+    height: 100vh;
+    margin: 20px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: #dc778f;
+    .tool {
+      width: 100%;
+      height: 50px;
+      display: flex;
+      justify-content: flex-end;
+      //padding: 10px;
+      border-bottom: 0.5px solid lightgrey;
+    }
+
+    .datatableTitle{
+      width: 100%;
+      height: 30px;
+      display: flex;
+      justify-content: flex-end;
+  
+      padding-top: 10px;
+      font-size: 12px;
+      color: black;
+      margin-bottom: 10px;
+      .total{
+        font-size: 12;
+        width: 100px;
+        display: flex;
+        justify-content: center; // căn giữa ngang
+        align-items: center;// căn guair dọc
+      }
+      .link{
+        text-decoration: none;
+     
+        font-size: 16px;
+        font-weight: 400;
+   
+        padding: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .search{
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        justify-content: 'flex-end';
+   
+        .textsearch{
+          align-items: center;
+          font-size: 14px;
+          padding: 5px;
+          padding-left: 15px;
+        }
+        .inputsearch{
+          padding-right: 15px;
+          color: #dc778f;
+        }
+      }
+   
+    }
+   
+    .cellWithImg {
+      display: flex;
+      align-items: center;
+  
+      .cellImg {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 20px;
+      }
+    }
+  
+    .cellWithStatus {
+      padding: 5px;
+      border-radius: 5px;
+  
+      &.active {
+        background-color: rgba(0, 128, 0, 0.05);
+        color: green;
+      }
+      &.pending {
+        background-color: rgba(255, 217, 0, 0.05);
+        color: goldenrod;
+      }
+      &.passive {
+        background-color: rgba(255, 0, 0, 0.05);
+        color: crimson;
+      }
+    }
+  
+    .cellAction {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+  
+      .viewButton {
+        padding: 2px 5px;
+        border-radius: 5px;
+        color: darkblue;
+        border: 1px dotted rgba(0, 0, 139, 0.596);
+        cursor: pointer;
+      }
+      
+      .deleteButton {
+        padding: 2px 5px;
+        border-radius: 5px;
+        color: crimson;
+        border: 1px dotted rgba(220, 20, 60, 0.6);
+        cursor: pointer;
+      }
+    }
+
+    .datatablePagging{
+      width: 100%;
+
+      //color: gray;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-top: 10px;
+      padding-right: 10px;
+      .total{
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+
+        padding: 5px;
+
+      }
+    }
+  }
+}
+
+
+.Submit{
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  bottom:10px;
+  right: 30px;
+  width: 100%;
+}
+
+.btnAddHover:hover{
+  background-color: #ffe0e0;
+}
