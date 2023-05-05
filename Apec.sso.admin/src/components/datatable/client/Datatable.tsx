@@ -8,12 +8,13 @@ import { SearchOutlined,PlusOutlined,ExclamationCircleOutlined  } from '@ant-des
 import { 
   // AppstoreAddOutlined,
   BarsOutlined, ReloadOutlined    } from '@ant-design/icons';
-import { Pagination,Table,Button, Col, Drawer, Form, Input, Row, Space ,Modal} from 'antd';
+import { Pagination,Table,Button, Col, Drawer, Form, Input, Row, Space ,Modal, Select} from 'antd';
 import { Client, SearchClientDto} from '../../../models/index'
 import type { ColumnsType } from 'antd/es/table';
-
+import type { SelectProps } from 'antd';
+const { Option } = Select;
 type Props = {}
-
+const options: SelectProps['options'] = [];
 const { TextArea } = Input;
 
 const Datatable = (props: Props) => {
@@ -23,22 +24,29 @@ const [SearchParam, setSearchParam] = useState<SearchClientDto>({
   PageNumber:1,
   PageSize:10,
   ClientId: "",
-  ClientName: "",
+  description: "",
+  clientName: "",
   ClientUri: ""
 } );
 const [ClientAddOrEdit, setClientAddOrEdit] = useState<Client>({
   id:"",
-  ClientId: "",
-  ClientName: "",
-  ClientUri: "",
-  AllowedScopes: [],
-  RedirectUris: [],
+  clientId: "",
+  description: "",
+  clientName: "",
+  clientUri: "",
+  allowedScopes: [],
+  redirectUris: [],
 
+  allowedGrantTypes: [],
+  requireClientSecret: true,
+  postLogoutRedirectUris: [],
+  allowedCorsOrigins:  [],
+  allowAccessTokensViaBrowser: true,
 } 
  );
 //state open adduser
 const [open, setOpen] = useState(false);
-
+const [Title, setTitle] = useState("");
 
 // add or Update
 const [addOrUpdate, setaddOrUpdate] = useState(0);// 1 is add , 2 is update
@@ -70,17 +78,46 @@ useEffect(() => {
 
 
   //Add
+  const onChangeAddClientName = (e : any) => {
+    
+    setClientAddOrEdit({
+      ...ClientAddOrEdit,
+      clientName:e.target.value
+    } )
+  }
   const onChangeAddClientId = (e : any) => {
     
     setClientAddOrEdit({
       ...ClientAddOrEdit,
-      ClientId:e.target.value
+      clientId:e.target.value
     } )
   }
-  const onChangeAddClientName= (e: any) => {
+  
+  const onChangeRequireClientSecret = (e : any) => {
+    
+    setClientAddOrEdit({
+      ...ClientAddOrEdit,
+      requireClientSecret:e.target.value
+    } )
+  }
+  const onChangeAllowAccessTokensViaBrowser = (e : any) => {
+    
+    setClientAddOrEdit({
+      ...ClientAddOrEdit,
+      allowAccessTokensViaBrowser:e.target.value
+    } )
+  }
+  const onChangeAddClientUri = (e : any) => {
+    
+    setClientAddOrEdit({
+      ...ClientAddOrEdit,
+      clientUri:e.target.value
+    } )
+  }
+  const onChangeAddClientDescriptiopn= (e: any) => {
     setClientAddOrEdit(  {
       ...ClientAddOrEdit,
-      ClientName:e.target.value
+      description:e.target.value
     } )
   }
 
@@ -113,28 +150,40 @@ useEffect(() => {
     //init state 
     setClientAddOrEdit({
       ...ClientAddOrEdit,
-      ClientId: "",
-      ClientUri: "",
-      ClientName:""
+      clientId: "",
+      clientUri: "",
+      description: "",
+      clientName:""
     })
     // setState add or up date
     setaddOrUpdate(1);
     // open TAB
     setOpen(true);
+    setTitle("Thêm client");
   };
   // Show edit client 
    const showEditDrawer = (record: Client) => {
     //init state 
       setClientAddOrEdit({
         ...ClientAddOrEdit,
-        ClientId: record.ClientId,
-        ClientName: record.ClientName,
+        clientId: record.clientId,
+        clientName: record.clientName,
+        description: record.description,
+        clientUri: record.clientUri,
         id: record.id,
       })
+
+      for (let i = 0; i < record.allowedGrantTypes.length; i++) {
+        options.push({
+          value: record.allowedGrantTypes[i],
+          label: record.allowedGrantTypes[i],
+        });
+      }
       // setState add or up date
       setaddOrUpdate(2);
       // open TAB
       setOpen(true);
+      setTitle("Sửa client");
   };
 // add client 
   const onAddOrUpdateUser = async () => {
@@ -142,11 +191,17 @@ useEffect(() => {
     if(addOrUpdate === 1){
       const addclient = {
         id:'',
-        ClientId: ClientAddOrEdit?.ClientId,
-        ClientName :  ClientAddOrEdit?.ClientName,
-        ClientUri:  ClientAddOrEdit?.ClientUri,
-        AllowedScopes:  ClientAddOrEdit?.AllowedScopes,
-        RedirectUris:  ClientAddOrEdit?.RedirectUris,
+        clientId: ClientAddOrEdit?.clientId,
+        clientName :  ClientAddOrEdit?.clientName,
+        description: ClientAddOrEdit?.description,
+        clientUri:  ClientAddOrEdit?.clientUri,
+        allowedScopes:  ClientAddOrEdit?.allowedScopes,
+        redirectUris:  ClientAddOrEdit?.redirectUris,
+        allowedGrantTypes:  ClientAddOrEdit?.allowedGrantTypes,
+        requireClientSecret:  ClientAddOrEdit?.requireClientSecret,
+        postLogoutRedirectUris:  ClientAddOrEdit?.postLogoutRedirectUris,
+        allowedCorsOrigins:   ClientAddOrEdit?.allowedCorsOrigins,
+        allowAccessTokensViaBrowser:  ClientAddOrEdit?.allowAccessTokensViaBrowser,
       }
       const lstClients = [addclient];
       await dispatch( clientAction.addClient(lstClients));
@@ -156,11 +211,17 @@ useEffect(() => {
     if(addOrUpdate === 2){
       const UpdateClient = {
         id:ClientAddOrEdit?.id,
-        ClientId: ClientAddOrEdit?.ClientId,
-        ClientName :  ClientAddOrEdit?.ClientName,
-        ClientUri:  ClientAddOrEdit?.ClientUri,
-        AllowedScopes:  ClientAddOrEdit?.AllowedScopes,
-        RedirectUris:  ClientAddOrEdit?.RedirectUris,
+        clientId: ClientAddOrEdit?.clientId,
+        clientName :  ClientAddOrEdit?.clientName,
+        description: ClientAddOrEdit?.description,
+        clientUri:  ClientAddOrEdit?.clientUri,
+        allowedScopes:  ClientAddOrEdit?.allowedScopes,
+        redirectUris:  ClientAddOrEdit?.redirectUris,
+        allowedGrantTypes:  ClientAddOrEdit?.allowedGrantTypes,
+        requireClientSecret:  ClientAddOrEdit?.requireClientSecret,
+        postLogoutRedirectUris:  ClientAddOrEdit?.postLogoutRedirectUris,
+        allowedCorsOrigins:   ClientAddOrEdit?.allowedCorsOrigins,
+        allowAccessTokensViaBrowser:  ClientAddOrEdit?.allowAccessTokensViaBrowser,
 
       } 
       await dispatch(clientAction.updateClient(UpdateClient));
@@ -197,28 +258,63 @@ const handleDelete =  async (id: string) => {
 
   // cột của Bảng==================================================================================
   const clientColumns: ColumnsType<Client> =[
+
     {
-      title: 'clientId',
+      title: 'Tên',
+      width: 100,
+      dataIndex: 'clientName',
+      key: 'clientName',
+      fixed: 'left',
+    },
+      {
+      title: 'Mô tả',
+      width: 100,
+      dataIndex: 'description',
+      key: 'description',
+      fixed: 'left',
+    },
+    {
+      title: 'ClientId',
       width: 100,
       dataIndex: 'clientId',
       key: 'clientId',
       fixed: 'left',
     },
     {
-      title: 'Tên',
-      width: 450,
-      dataIndex: 'clientName',
-      key: 'clientName',
+      title: 'ClientUri',
+      width: 100,
+      dataIndex: 'clientUri',
+      key: 'clientUri',
       fixed: 'left',
     },
-  
+    {
+      title: 'allowedGrantTypes',
+      width: 100,
+      dataIndex: 'allowedGrantTypes',
+      key: 'allowedGrantTypes',
+      fixed: 'left',
+    },
+    {
+      title: 'postLogoutRedirectUris',
+      width: 100,
+      dataIndex: 'postLogoutRedirectUris',
+      key: 'postLogoutRedirectUris',
+      fixed: 'left',
+    },
+    // {
+    //   title: 'allowedCorsOrigins',
+    //   width: 100,
+    //   dataIndex: 'allowedCorsOrigins',
+    //   key: 'allowedCorsOrigins',
+    //   fixed: 'left',
+    // },
     {
       title: 'Hành động',
       dataIndex: 'Action',
   
       key: 'operation',
       fixed: 'right',
-      width: 100,
+      width: 50,
       //render: () => <a>action</a>,
       render: (_ : any, record : Client) => {
               return (
@@ -241,7 +337,9 @@ const handleDelete =  async (id: string) => {
     
   ];
 
-
+  const handleChange = (value: string) => {
+    console.log(`selected ${value}`);
+  };
   return (
     <div className="background">
     <div className="title">
@@ -307,7 +405,7 @@ const handleDelete =  async (id: string) => {
      
   </div>
   <Drawer
-      title="Tạo mới client"
+      title={Title}
       width={720}
       onClose={onClose}
       open={open}
@@ -315,42 +413,83 @@ const handleDelete =  async (id: string) => {
         paddingBottom: 80,
       }}
     >
-      <Form layout="vertical" hideRequiredMark
-      initialValues={{ clientId:ClientAddOrEdit.ClientId , clientName :ClientAddOrEdit.ClientName }}
-      >
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="clientId"
-              label="Id client"
-              rules={[
-                {
-                  required: true,
-                  message: 'Nhập tên client',
-                },
-              ]}
-            >
-              <Input placeholder="Nhập tên client"   onChange={onChangeAddClientId} />
-            </Form.Item>
-          </Col>
+
+        <Row className="row"  gutter={16}>
           <Col span={24}>
-          <Form.Item
-              name="clientName "
-              label="tên client"
-              rules={[
-                {
-                  required: true,
-                  message: 'Nhập mô tả',
-                },
-              ]}
-            >
-              {/* <Input placeholder="Nhập mô tả" onChange={onChangeAddClientDescrip}/> */}
-              <TextArea rows={4} placeholder="Nhập mô tả" maxLength={150} onChange={onChangeAddClientName}/>
-            </Form.Item>
+            <label>Tên client:</label>
+            <Input placeholder="Nhập tên client"  value={ClientAddOrEdit.clientName} onChange={onChangeAddClientName} />    
+          </Col>
+        </Row>
+        <Row className="row"  gutter={16}>
+          <Col span={24}>
+            <label>ClientId:</label>
+            <Input placeholder="clientId"  value={ClientAddOrEdit.clientId} onChange={onChangeAddClientId} />    
+          </Col>
+        </Row>
+        <Row className="row"  gutter={16}>
+          <Col span={24}>
+            <label>Uri:</label>
+            <Input placeholder="clientUri"  value={ClientAddOrEdit.clientUri} onChange={onChangeAddClientUri} />    
+          </Col>
+        </Row>
+        <Row className="row"  gutter={16}>
+          <Col span={24}>
+            <label>AllowedGrantTypes:</label>
+            {/* <Input placeholder="allowedGrantTypes"  value={ClientAddOrEdit.allowedGrantTypes} onChange={onChangeAddClientUri} />     */}
+            <Select
+              mode="tags"
+              style={{ width: '100%' }}
+              onChange={handleChange}
+              tokenSeparators={[',']}
+              //defaultValue={ClientAddOrEdit.allowedGrantTypes}
+              //value={"dfdf"}
+              //defaultValue={ClientAddOrEdit.allowedGrantTypes}
+              options={options}
+            />
+          </Col>
+        </Row>
+        <Row className="row"  gutter={16}>
+          <Col span={24}>
+            <label>PostLogoutRedirectUris:</label>
+            <Input placeholder="postLogoutRedirectUris"  value={ClientAddOrEdit.postLogoutRedirectUris} onChange={onChangeAddClientUri} />    
+          </Col>
+        </Row>
+        <Row className="row"  gutter={16}>
+          <Col span={12}>
+            <label>RequireClientSecret:</label><br></br>
+            <Select style={{width:"100%"}} placeholder="Chọn " defaultValue={ClientAddOrEdit.requireClientSecret} onChange={onChangeRequireClientSecret}>
+              <Option value={true}>True</Option>
+              <Option value={false}>False</Option>
+            </Select>    
+          </Col>
+          <Col span={12}>
+            <label>AllowAccessTokensViaBrowser:</label><br></br>
+            <Select style={{width:"100%"}} placeholder="Chọn " defaultValue={ClientAddOrEdit.allowAccessTokensViaBrowser} onChange={onChangeAllowAccessTokensViaBrowser}>
+              <Option value={true}>True</Option>
+              <Option value={false}>False</Option>
+            </Select>
           </Col>
         </Row>
 
-      </Form>
+        <Row className="row"  gutter={16}>
+          <Col span={24}>
+            <label>AllowedCorsOrigins:</label>
+            <Input placeholder="allowedCorsOrigins"  value={ClientAddOrEdit.allowedCorsOrigins} onChange={onChangeAddClientUri} />    
+          </Col>
+        </Row>
+        <Row className="row"  gutter={16}>
+          <Col span={24}>
+            <label>AllowedScopes:</label>
+            <Input placeholder="allowedScopes"  value={ClientAddOrEdit.allowedScopes} onChange={onChangeAddClientUri} />    
+          </Col>
+        </Row>
+        <Row
+         className="row"  gutter={16}>
+          <Col span={24}>
+            <label>Mô tả:</label>
+            <TextArea rows={4} placeholder="Nhập mô tả" maxLength={150} value={ClientAddOrEdit.description} onChange={onChangeAddClientDescriptiopn}/>
+          </Col>
+        </Row>
       <div className="Submit">
         <Space style={{display:'flex'  }}>
             <Button  onClick={onClose}>Cancel</Button>

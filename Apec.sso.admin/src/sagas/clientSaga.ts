@@ -11,8 +11,9 @@ function* getSearchClientSaga(){
     try {
         const data:LisResponse<Client> = yield call(clientService.searchClient,{
             ClientId: "",
-            ClientName: "",
+            clientName: "",
             ClientUri: "",
+            description: "",
             PageNumber:1,
             PageSize:11
         });
@@ -55,11 +56,11 @@ function* getAddClientSaga(action : any) {
 
     console.log(" Client saga : ", data);
     yield put(clientAction.addClientSuccess(data));
-    openNotification("Tạo quyền thành công");
+    openNotification("Tạo client thành công");
   } catch (error) {
     //handle error
     console.log("Client saga error: " + error);
-    openNotification("Tạo quyền thất bại");
+    openNotification("Tạo client thất bại");
   }
 }
 
@@ -73,10 +74,10 @@ function* getUpdateClientSaga(action : any) {
 
     console.log(" Client saga : ", data);
     yield put(clientAction.updateClientSuccess(data));
-    openNotification("Sửa quyền thành công");
+    openNotification("Sửa client thành công");
   } catch (error) {
     //handle error
-    openNotification("Sửa quyền thất bại");
+    openNotification("Sửa client thất bại");
   }
 }
 
@@ -91,11 +92,11 @@ function* getDeleteClientSaga(action : any) {
 
     console.log(" Client saga : ", data);
     yield put(clientAction.deleteClientSuccess(data));
-    openNotification("Xóa quyền thành công");
+    openNotification("Xóa client thành công");
   } catch (error) {
     //handle error
     console.log("Client saga error: " + error);
-    openNotification("Xóa quyền thất bại");
+    openNotification("Xóa client thất bại");
   }
 }
 

@@ -1,8 +1,16 @@
 export interface Client{
-    ClientId: string;
+    clientId: string;
     id: string;
-    ClientName: string;
-    ClientUri: string;
-    AllowedScopes: [];
-    RedirectUris: [];
+    description: string;
+    clientName: string;
+    clientUri: string;
+
+    allowedGrantTypes: [];
+    requireClientSecret: boolean;
+    postLogoutRedirectUris: [];
+    allowedCorsOrigins:  [];
+    allowAccessTokensViaBrowser: boolean;
+
+    redirectUris: [];
+    allowedScopes: [];
 }

@@ -613,7 +613,7 @@ const handleDelete =  async (id) => {
             </Col>
             <Col span={12}>
                     <label>Loại:</label> <br/>
-                    <Select placeholder="Chọn loại người dùng" defaultValue={Isactive} onChange={handleChangeAddIsActice}>
+                    <Select style={{width:"100%"}} placeholder="Chọn loại người dùng" defaultValue={Isactive} onChange={handleChangeAddIsActice}>
                       <Option value="Active">Active</Option>
                       <Option value="InActive">InActive</Option>
                     </Select>

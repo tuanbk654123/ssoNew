@@ -1,21 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AspNetCore.Identity.MongoDbCore.Infrastructure;
-using DataAccess.Models;
 using DataAccess.MongoDbHelper;
 using DataAccess.Services;
 using DataAccess.Services.Interfaces;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
 using Microsoft.OpenApi.Models;
-using MongoDB.Bson.Serialization.Conventions;
-using MongoDB.Driver;
 using UserManager.Repositories;
 using UserManager.Repositories.Interfaces;
 using UserManager.Services;
@@ -81,8 +68,8 @@ namespace UserManager.Extensions
         {
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IRoleService , RoleService>();
-            services.AddTransient<IRoleRepository , RoleRepository>();
+            services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<IRoleRepository, RoleRepository>();
             services.AddTransient<IUserLoginService, UserLoginService>();
             services.AddTransient<IUserLoginRepository, UserLoginRepository>();
 

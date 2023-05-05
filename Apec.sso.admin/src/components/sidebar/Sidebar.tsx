@@ -213,9 +213,9 @@ const Sidebar = (props: Props) => {
                 inlineCollapsed={collapsed}
                 items={items}
             />
-            <Button type="primary" onClick={toggleCollapsed} style={{  height: '30px',  width :'30px', position:'absolute', right:'-32px' }}>
+            {/* <Button type="primary" onClick={toggleCollapsed} style={{  height: '30px',  width :'30px', position:'absolute', right:'-32px' }}>
                 {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            </Button>
+            </Button> */}
         </div>
 
     )

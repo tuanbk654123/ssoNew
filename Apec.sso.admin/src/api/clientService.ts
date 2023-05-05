@@ -25,7 +25,7 @@ const clientService = {
 
     updateClient( Client: Client): Promise<any>{
         const url = '/api/Clients/UpdateClient';
-        return axiosClient.put(url,Client );
+        return axiosClient.post(url,Client );
     },
 
     deleteClients( lstId: string[]): Promise<any>{
