@@ -25,7 +25,7 @@ const roleService = {
 
     updateRole( Role: Role): Promise<any>{
         const url = '/api/Roles/UpdateRole';
-        return axiosClient.put(url,Role );
+        return axiosClient.post(url,Role );
     },
 
     deleteRoles( lstId: string[]): Promise<any>{

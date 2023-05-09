@@ -1,6 +1,7 @@
 ﻿using DataAccess.Models;
 using DataAccess.Models.Dto;
 using DataAccess.Pagination.Base;
+using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using UserManager.Services.Interfaces;
 
@@ -53,9 +54,9 @@ namespace UserManager.Controllers
         {
 
             Clients ClientCreateCheck = await ClientService.GetById(updateClientDto.Id);
-            ClientCreateCheck.Description = updateClientDto.Description;
-            ClientCreateCheck.ClientName = updateClientDto.ClientName;
-
+            //ClientCreateCheck.Description = updateClientDto.Description;
+            //ClientCreateCheck.ClientName = updateClientDto.ClientName;
+            ClientCreateCheck = updateClientDto.Adapt<Clients>();
             // Tạo Client
 
             bool result = await ClientService.Update(ClientCreateCheck);

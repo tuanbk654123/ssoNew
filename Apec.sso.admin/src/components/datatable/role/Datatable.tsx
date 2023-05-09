@@ -1,4 +1,4 @@
-import React from 'react'
+
 import "./datatable.scss";
 import { useEffect, useState } from "react";
 import { roleAction} from '../../../features/role/roleSlice';
@@ -8,7 +8,7 @@ import { SearchOutlined,PlusOutlined,ExclamationCircleOutlined  } from '@ant-des
 import { 
   // AppstoreAddOutlined,
   BarsOutlined, ReloadOutlined    } from '@ant-design/icons';
-import { Pagination,Table,Button, Col, Drawer, Form, Input, Row, Space ,Modal} from 'antd';
+import { Pagination,Table,Button, Col, Drawer, Input, Row, Space ,Modal} from 'antd';
 import { Role, SearchRoleDto} from '../../../models/index'
 import type { ColumnsType } from 'antd/es/table';
 
@@ -218,8 +218,8 @@ const handleDelete =  async (id: string) => {
     {
       title: 'Mô tả',
       width: 450,
-      dataIndex: 'descrip',
-      key: 'descrip',
+      dataIndex: 'description',
+      key: 'description',
       fixed: 'left',
     },
   
@@ -237,13 +237,13 @@ const handleDelete =  async (id: string) => {
           
                     <div className="viewButton"
                      onClick={() => showEditDrawer(record)}
-                    >Edit</div>
+                    >Sửa</div>
              
                   <div
                     className="deleteButton"
                     onClick={() => handleDelete(record.id)}
                   >
-                    Delete
+                    Xóa
                   </div>
                 </div>
               );
@@ -329,42 +329,21 @@ const handleDelete =  async (id: string) => {
         paddingBottom: 80,
       }}
     >
-      <Form layout="vertical" hideRequiredMark
-      initialValues={{ name:RoleAddOrEdit.name , descrip :RoleAddOrEdit.description }}
-      >
-        <Row gutter={16}>
-          <Col span={12}>
-            <Form.Item
-              name="name"
-              label="Tên quyền"
-              rules={[
-                {
-                  required: true,
-                  message: 'Nhập tên quyền',
-                },
-              ]}
-            >
-              <Input placeholder="Nhập tên quyền"   onChange={onChangeAddRoleName} />
-            </Form.Item>
-          </Col>
-          <Col span={24}>
-          <Form.Item
-              name="descrip "
-              label="Mô tả"
-              rules={[
-                {
-                  required: true,
-                  message: 'Nhập mô tả',
-                },
-              ]}
-            >
-              {/* <Input placeholder="Nhập mô tả" onChange={onChangeAddRoleDescrip}/> */}
-              <TextArea rows={4} placeholder="Nhập mô tả" maxLength={150} onChange={onChangeAddRoleDescrip}/>
-            </Form.Item>
-          </Col>
-        </Row>
 
-      </Form>
+    <Row gutter={16}>
+      <Col span={24}>
+        <label>Tên:</label>
+        <Input placeholder="Nhập tên quyền" value={RoleAddOrEdit.name}  onChange={onChangeAddRoleName} />
+      </Col>
+    </Row>
+
+    <Row gutter={16}>
+      <Col span={24}>
+      <label>Mô tả:</label>
+        <TextArea rows={4} placeholder="Nhập mô tả"  value={RoleAddOrEdit.description}  maxLength={150} onChange={onChangeAddRoleDescrip}/>
+      </Col>
+    </Row>
+  
       <div className="Submit">
         <Space style={{display:'flex'  }}>
             <Button  onClick={onClose}>Cancel</Button>

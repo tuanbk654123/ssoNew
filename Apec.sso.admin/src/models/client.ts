@@ -5,12 +5,12 @@ export interface Client{
     clientName: string;
     clientUri: string;
 
-    allowedGrantTypes: [];
-    requireClientSecret: boolean;
-    postLogoutRedirectUris: [];
-    allowedCorsOrigins:  [];
-    allowAccessTokensViaBrowser: boolean;
+    allowedGrantTypes: string[];
+    requireClientSecret?: boolean;
+    postLogoutRedirectUris: string[];
+    allowedCorsOrigins:  string[];
+    allowAccessTokensViaBrowser?: boolean;
 
-    redirectUris: [];
-    allowedScopes: [];
+    redirectUris: string[];
+    allowedScopes: string[];
 }

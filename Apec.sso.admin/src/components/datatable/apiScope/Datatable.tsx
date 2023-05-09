@@ -1,4 +1,4 @@
-
+import React from 'react'
 import "./datatable.scss";
 import { useEffect, useState } from "react";
 import { clientAction} from '../../../features/client/clientSlice';
@@ -8,7 +8,7 @@ import { SearchOutlined,PlusOutlined,ExclamationCircleOutlined  } from '@ant-des
 import { 
   // AppstoreAddOutlined,
   BarsOutlined, ReloadOutlined    } from '@ant-design/icons';
-import { Pagination,Table,Button, Col, Drawer, Input, Row, Space ,Modal, Select} from 'antd';
+import { Pagination,Table,Button, Col, Drawer, Form, Input, Row, Space ,Modal, Select} from 'antd';
 import { Client, SearchClientDto} from '../../../models/index'
 import type { ColumnsType } from 'antd/es/table';
 import type { SelectProps } from 'antd';
@@ -36,11 +36,12 @@ const [ClientAddOrEdit, setClientAddOrEdit] = useState<Client>({
   clientUri: "",
   allowedScopes: [],
   redirectUris: [],
+
   allowedGrantTypes: [],
-  requireClientSecret: undefined,
+  requireClientSecret: true,
   postLogoutRedirectUris: [],
   allowedCorsOrigins:  [],
-  allowAccessTokensViaBrowser: undefined,
+  allowAccessTokensViaBrowser: true,
 } 
  );
 //state open adduser
@@ -57,11 +58,11 @@ const dispatch = useAppDispatch();
 useEffect(() => {
 
   dispatch(clientAction.searchclient(SearchParam));// init Client select
-}, [dispatch,SearchParam,ClientAddOrEdit])
+}, [dispatch,SearchParam])
 
   // lấy data từ reducer 
   const clients = useAppSelector((state) => state.client.lstRespone)  ;
-  //console.log("Datatable clients = "+ JSON.stringify(clients) );
+  console.log("Datatable clients = "+ JSON.stringify(clients) );
 
   //Thay đổi Size chage
   const onShowSizeChange = (current : number, pageSize: number) => {
@@ -96,14 +97,14 @@ useEffect(() => {
     
     setClientAddOrEdit({
       ...ClientAddOrEdit,
-      requireClientSecret:e
+      requireClientSecret:e.target.value
     } )
   }
   const onChangeAllowAccessTokensViaBrowser = (e : any) => {
     
     setClientAddOrEdit({
       ...ClientAddOrEdit,
-      allowAccessTokensViaBrowser:e
+      allowAccessTokensViaBrowser:e.target.value
     } )
   }
   const onChangeAddClientUri = (e : any) => {
@@ -152,14 +153,7 @@ useEffect(() => {
       clientId: "",
       clientUri: "",
       description: "",
-      allowedGrantTypes: [],
-      requireClientSecret: undefined,
-      postLogoutRedirectUris: [],
-      allowedCorsOrigins:  [],
-      allowAccessTokensViaBrowser:undefined,
-      clientName:"",
-      allowedScopes: [],
-      redirectUris:  [],
+      clientName:""
     })
     // setState add or up date
     setaddOrUpdate(1);
@@ -176,22 +170,15 @@ useEffect(() => {
         clientName: record.clientName,
         description: record.description,
         clientUri: record.clientUri,
-        allowedGrantTypes: record.allowedGrantTypes,
-        requireClientSecret: record.requireClientSecret,
-        postLogoutRedirectUris: record.postLogoutRedirectUris,
-        allowedCorsOrigins:  record.allowedCorsOrigins,
-        allowAccessTokensViaBrowser: record.allowAccessTokensViaBrowser,
-        allowedScopes:  record.allowedScopes,
-        redirectUris:  record.redirectUris,
         id: record.id,
       })
 
-      // for (let i = 0; i < record.allowedGrantTypes.length; i++) {
-      //   options.push({
-      //     value: record.allowedGrantTypes[i],
-      //     label: record.allowedGrantTypes[i],
-      //   });
-      // }
+      for (let i = 0; i < record.allowedGrantTypes.length; i++) {
+        options.push({
+          value: record.allowedGrantTypes[i],
+          label: record.allowedGrantTypes[i],
+        });
+      }
       // setState add or up date
       setaddOrUpdate(2);
       // open TAB
@@ -335,13 +322,13 @@ const handleDelete =  async (id: string) => {
           
                     <div className="viewButton"
                      onClick={() => showEditDrawer(record)}
-                    >Sửa</div>
+                    >Edit</div>
              
                   <div
                     className="deleteButton"
                     onClick={() => handleDelete(record.id)}
                   >
-                    Xóa
+                    Delete
                   </div>
                 </div>
               );
@@ -349,53 +336,9 @@ const handleDelete =  async (id: string) => {
     },
     
   ];
-  
-  const handleChangeRedirectUris = (value: String) => {
-    console.log(`selected ${value}`);
-    setClientAddOrEdit(
-      {
-        ...ClientAddOrEdit,
-        redirectUris:  String(value).split(",")
-      }
-    );
-  };
-  const handleChangeAllowedScopes = (value: String) => {
-    console.log(`selected ${value}`);
-    setClientAddOrEdit(
-      {
-        ...ClientAddOrEdit,
-        allowedScopes:  String(value).split(",")
-      }
-    );
-  };
-  const handleChangeAllowedCorsOrigins = (value: String) => {
-    console.log(`selected ${value}`);
-    setClientAddOrEdit(
-      {
-        ...ClientAddOrEdit,
-        allowedCorsOrigins:  String(value).split(",")
-      }
-    );
-  };
-  const handleChangePostLogoutRedirectUris = (value: String) => {
-    console.log(`selected ${value}`);
-    setClientAddOrEdit(
-      {
-        ...ClientAddOrEdit,
-        postLogoutRedirectUris:  String(value).split(",")
-      }
 
-    );
-  };
-  const handleChangeAllowedGrantTypes = (value: String) => {
+  const handleChange = (value: string) => {
     console.log(`selected ${value}`);
-    setClientAddOrEdit(
-      {
-        ...ClientAddOrEdit,
-        allowedGrantTypes:  String(value).split(",")
-      }
-
-    );
   };
   return (
     <div className="background">
@@ -492,13 +435,15 @@ const handleDelete =  async (id: string) => {
         <Row className="row"  gutter={16}>
           <Col span={24}>
             <label>AllowedGrantTypes:</label>
-           
+            {/* <Input placeholder="allowedGrantTypes"  value={ClientAddOrEdit.allowedGrantTypes} onChange={onChangeAddClientUri} />     */}
             <Select
               mode="tags"
               style={{ width: '100%' }}
-              onChange={handleChangeAllowedGrantTypes}
+              onChange={handleChange}
               tokenSeparators={[',']}  
-              value={(addOrUpdate === 2) ? ClientAddOrEdit.allowedGrantTypes.toString():undefined}
+              //defaultValue={ClientAddOrEdit.allowedGrantTypes}
+              value={"dfdf"}
+              //defaultValue={ClientAddOrEdit.allowedGrantTypes}
               options={options}
             />
           </Col>
@@ -506,27 +451,20 @@ const handleDelete =  async (id: string) => {
         <Row className="row"  gutter={16}>
           <Col span={24}>
             <label>PostLogoutRedirectUris:</label>
-            <Select
-              mode="tags"
-              style={{ width: '100%' }}
-              onChange={handleChangePostLogoutRedirectUris}
-              tokenSeparators={[',']}  
-              value={(addOrUpdate === 2) ?ClientAddOrEdit.postLogoutRedirectUris.toString():undefined}
-              //options={options}
-            />
+            <Input placeholder="postLogoutRedirectUris"  value={ClientAddOrEdit.postLogoutRedirectUris} onChange={onChangeAddClientUri} />    
           </Col>
         </Row>
         <Row className="row"  gutter={16}>
           <Col span={12}>
             <label>RequireClientSecret:</label><br></br>
-            <Select style={{width:"100%"}} placeholder="Chọn "  value={ClientAddOrEdit.requireClientSecret} onChange={onChangeRequireClientSecret}>
+            <Select style={{width:"100%"}} placeholder="Chọn " defaultValue={ClientAddOrEdit.requireClientSecret} onChange={onChangeRequireClientSecret}>
               <Option value={true}>True</Option>
               <Option value={false}>False</Option>
             </Select>    
           </Col>
           <Col span={12}>
             <label>AllowAccessTokensViaBrowser:</label><br></br>
-            <Select style={{width:"100%"}} placeholder="Chọn "  value={ClientAddOrEdit.allowAccessTokensViaBrowser} onChange={onChangeAllowAccessTokensViaBrowser}>
+            <Select style={{width:"100%"}} placeholder="Chọn " defaultValue={ClientAddOrEdit.allowAccessTokensViaBrowser} onChange={onChangeAllowAccessTokensViaBrowser}>
               <Option value={true}>True</Option>
               <Option value={false}>False</Option>
             </Select>
@@ -536,40 +474,13 @@ const handleDelete =  async (id: string) => {
         <Row className="row"  gutter={16}>
           <Col span={24}>
             <label>AllowedCorsOrigins:</label>
-            <Select
-              mode="tags"
-              style={{ width: '100%' }}
-              onChange={handleChangeAllowedCorsOrigins}
-              tokenSeparators={[',']}  
-              value={(addOrUpdate === 2) ?ClientAddOrEdit.allowedCorsOrigins.toString():undefined}
-
-            />
+            <Input placeholder="allowedCorsOrigins"  value={ClientAddOrEdit.allowedCorsOrigins} onChange={onChangeAddClientUri} />    
           </Col>
         </Row>
         <Row className="row"  gutter={16}>
           <Col span={24}>
             <label>AllowedScopes:</label>
-            <Select
-              mode="tags"
-              style={{ width: '100%' }}
-              onChange={handleChangeAllowedScopes}
-              tokenSeparators={[',']}  
-              value={(addOrUpdate === 2) ?ClientAddOrEdit.allowedScopes.toString():undefined}
-
-            />
-          </Col>
-        </Row>
-        <Row className="row"  gutter={16}>
-          <Col span={24}>
-            <label>RedirectUris:</label>
-            <Select
-              mode="tags"
-              style={{ width: '100%' }}
-              onChange={handleChangeRedirectUris}
-              tokenSeparators={[',']}  
-              value={ (addOrUpdate === 2) ? ClientAddOrEdit.redirectUris.toString():undefined}
-
-            />
+            <Input placeholder="allowedScopes"  value={ClientAddOrEdit.allowedScopes} onChange={onChangeAddClientUri} />    
           </Col>
         </Row>
         <Row

@@ -1,26 +1,18 @@
 import React from 'react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import "./sidebar.scss"
-// import DashboardIcon from '@mui/icons-material/Dashboard';
-// import PersonIcon from '@mui/icons-material/Person';
-// import EventNoteIcon from '@mui/icons-material/EventNote';
-// import LogoutIcon from '@mui/icons-material/Logout';
-// import AccountBoxIcon from '@mui/icons-material/AccountBox';
-// import MenuBookIcon from '@mui/icons-material/MenuBook';
-import { Link } from "react-router-dom";
 import {
-    UserOutlined, AppstoreOutlined, LogoutOutlined, HistoryOutlined, LockOutlined, LaptopOutlined, ContainerOutlined,
+    UserOutlined, AppstoreOutlined, LogoutOutlined, HistoryOutlined, LockOutlined, LaptopOutlined,
     DesktopOutlined,
     MailOutlined,
-    MenuFoldOutlined,
     MenuUnfoldOutlined,
-    PieChartOutlined, SaveOutlined
+    MenuFoldOutlined
     // ,LinkOutlined    
 } from '@ant-design/icons';
 import { useHistory } from "react-router-dom";
 //import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import { Image } from 'antd';
-import background from './SingleSignOn.png'
+import { Button, Image } from 'antd';
+import background from './logo.png'
 
 import { useAppDispatch } from '../../app/hooks';
 import { authAction } from '../../features/auth/authSlice';
@@ -29,7 +21,7 @@ import { authAction } from '../../features/auth/authSlice';
 //===============================================================================================================================
 
 import type { MenuProps } from 'antd';
-import { Button, Menu } from 'antd';
+import {  Menu } from 'antd';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -93,76 +85,7 @@ const Sidebar = (props: Props) => {
         setCollapsed(!collapsed);
     };
 
-    //=====================================================================================================================================
-    const [isActiveHoverUser, setIsActiveHoverUser] = useState(props.isActiveHoverUser);
-    const [isActiveHoverRole, setIsActiveHoverRole] = useState(props.isActiveHoverRole);
-    const [isActiveHoverHistory, setIsActiveHoverHistory] = useState(props.isActiveHoverHistory);
-    const [isActiveHoverClient, setIsActiveHoverClient] = useState(props.isActiveHoverClient);
-    const [isActiveHoverTutorial, setIsActiveHoverTutorial] = useState(props.isActiveHoverTutorial);
-    const [isActiveHoverLogout, setIsActiveHoverLogout] = useState(props.isActiveHoverLogout);
-    const [isActiveHoverHome, setIsActiveHoverHome] = useState(props.isActiveHoverHome);
 
-    const resetAll = () => {
-
-        setIsActiveHoverUser(false);
-        setIsActiveHoverRole(false);
-        setIsActiveHoverHistory(false);
-        setIsActiveHoverClient(false);
-        setIsActiveHoverTutorial(false);
-        setIsActiveHoverLogout(false);
-        setIsActiveHoverHome(false);
-
-    };
-
-    const handleClickUser = () => {
-        // 👇️ toggle
-        if (isActiveHoverUser) return;
-        resetAll();
-        setIsActiveHoverUser(true);
-    };
-    const handleClickRole = () => {
-        // 👇️ toggle
-        if (isActiveHoverRole) return;
-        resetAll();
-        setIsActiveHoverRole(true);
-    };
-    const handleClickHistory = () => {
-        // 👇️ toggle
-        if (isActiveHoverHistory) return;
-        resetAll();
-        setIsActiveHoverHistory(true);
-    };
-    const handleClickClient = () => {
-        // 👇️ toggle
-        if (isActiveHoverClient) return;
-        resetAll();
-        setIsActiveHoverClient(true);
-    };
-    const handleClickTutorial = () => {
-        // 👇️ toggle
-        if (isActiveHoverTutorial) return;
-        resetAll();
-        setIsActiveHoverTutorial(true);
-    };
-    const handleClickLogout = () => {
-        // 👇️ toggle
-        if (isActiveHoverLogout) return;
-        resetAll();
-        setIsActiveHoverLogout(true);
-        signOut();
-    };
-    const handleClickHome = () => {
-        // 👇️ toggle
-        if (isActiveHoverHome) return;
-        resetAll();
-        setIsActiveHoverHome(true);
-    };
-    useEffect(() => {
-
-    }, [isActiveHoverHome, isActiveHoverLogout,
-        isActiveHoverTutorial, isActiveHoverClient,
-        isActiveHoverHistory, isActiveHoverRole,
-        isActiveHoverUser])
     const dispatch = useAppDispatch();
 
     const handleLoginout = () => {
@@ -200,22 +123,35 @@ const Sidebar = (props: Props) => {
         }
     };
     return (
-        <div style={{display:'flex', position:'relative'}} >
-            
+        <div style={{
+            //display:'flex',
+            position:'relative',
+            background:'#001529',
+            width:collapsed ?"4vw":"13vw" 
+        }} >
+
+           <Image
+                width={collapsed ?"4vw":"13vw" }
+                height={collapsed ?"28px":"90px"}
+                src={ background}
+                preview= {false}
+                style={{ paddingRight:collapsed?'':'1.5vw',paddingLeft:collapsed?'':'1.5vw',marginTop:collapsed?'31px':'',marginBottom:collapsed?'60px':''}}
+            />
+            <Button type="text" onClick={toggleCollapsed} style={{  height: '70px',  width :'30px', position:'absolute', top:'0px', right:'-32px' }}>
+                {collapsed ? <MenuUnfoldOutlined  /> : <MenuFoldOutlined />}
+            </Button>
             <Menu
                 onClick={onClick}
-                style={{ height: "123vh" }}
-                defaultSelectedKeys={['1']}
-                defaultOpenKeys={['sub1']}
+                style={{ height: "123vh" , width:collapsed ?"4vw":"13vw"  }}
+                defaultSelectedKeys={[]}
+                defaultOpenKeys={[]}
                 mode="inline"
                 theme="dark"
-              
+                
                 inlineCollapsed={collapsed}
                 items={items}
             />
-            {/* <Button type="primary" onClick={toggleCollapsed} style={{  height: '30px',  width :'30px', position:'absolute', right:'-32px' }}>
-                {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            </Button> */}
+         
         </div>
 
     )

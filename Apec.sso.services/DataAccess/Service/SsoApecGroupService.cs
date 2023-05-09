@@ -1,15 +1,12 @@
 ﻿
+using DataAccess.Models;
+using DataAccess.Models.Dto;
+using DataAccess.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
+using SsoGroup.Models;
 using System;
 using System.Collections.Generic;
-
 using System.Threading.Tasks;
-
-using DataAccess.Services.Interfaces;
-using DataAccess.Models.Dto;
-using DataAccess.Models;
-using SsoGroup.Models;
-using Microsoft.AspNetCore.Identity;
 
 namespace DataAccess.Services
 {
@@ -36,11 +33,11 @@ namespace DataAccess.Services
             else return false;
         }
 
-        
+
         // tìm người dùng theo username 
         public async Task<User> FindByNameAsync(string userName)
         {
-            var (result, data) = await SendRequest<User>("/Operations/FindByName?userName=" + userName,string.Empty, RestSharp.Method.Get,
+            var (result, data) = await SendRequest<User>("/Operations/FindByName?userName=" + userName, string.Empty, RestSharp.Method.Get,
                 new Dictionary<string, string> { { "Authorization", GenerateToken() } });
 
             if (result == System.Net.HttpStatusCode.OK)
@@ -103,7 +100,15 @@ namespace DataAccess.Services
             return data;
 
         }
+        //UpdateRole
+        public async Task<bool> UpdateFromRole(UpdateFromRoleDto updateFromRoleDto)
+        {
+            var (result, data) = await SendRequest<bool>("/Operations/UpdateFromRole", updateFromRoleDto, RestSharp.Method.Post,
+                new Dictionary<string, string> { { "Authorization", GenerateToken() } });
 
+            return data;
+
+        }
         //UpdateUser
         public async Task<bool> UpdateUser(Users users)
         {

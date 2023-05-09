@@ -1,11 +1,10 @@
 using DataAccess.Models;
-using SsoGroup.Models;
+using IdentityServer4;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
+using SsoGroup.Models;
 using System.Threading.Tasks;
-using IdentityServer4;
 
 namespace UserManager.Controllers
 {
@@ -41,7 +40,7 @@ namespace UserManager.Controllers
             await userManager.AddToRoleAsync(appUser, "Admin");
 
             if (result.Succeeded)
-                return Ok("User Created Successfully") ;
+                return Ok("User Created Successfully");
             else
             {
                 return BadRequest("False to create User");
@@ -59,11 +58,11 @@ namespace UserManager.Controllers
                 Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(appUser, user.Password, false, false);
                 if (result.Succeeded)
                 {
-                   var token = await tools.IssueClientJwtAsync(
-                   clientId: "client_id",
-                   lifetime: 3600,
-                   audiences: new[] { "backend.api" });
-                   return Ok(token);
+                    var token = await tools.IssueClientJwtAsync(
+                    clientId: "client_id",
+                    lifetime: 3600,
+                    audiences: new[] { "backend.api" });
+                    return Ok(token);
                 }
             }
             return Unauthorized();

@@ -1,16 +1,14 @@
-﻿using SsoGroup.Models;
+﻿using DataAccess.Models;
+using DataAccess.Models.Dto;
+using IdentityServer4;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using System;
-using DataAccess.Models;
-using DataAccess.Models.Dto;
-using System.Xml.Linq;
-using IdentityServer4;
+using SsoGroup.Models;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
+using System.Threading.Tasks;
 
 namespace SsoGroup.Controllers
 {
@@ -62,20 +60,20 @@ namespace SsoGroup.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserDto createUserDto)
         {
-          
+
             Users appUser = new Users
             {
                 UserName = createUserDto.UserName,
                 Email = createUserDto.Email,
                 PhoneNumber = createUserDto.PhoneNumber,
-                IsActive =  createUserDto.IsActive,
-                
+                IsActive = createUserDto.IsActive,
+
             };
 
             IdentityResult result = await userManager.CreateAsync(appUser, createUserDto.Password);
 
             //Adding Role to user
-            if(createUserDto?.Roles != null)
+            if (createUserDto?.Roles != null)
             {
                 foreach (var item in createUserDto.Roles)
                 {
@@ -83,7 +81,7 @@ namespace SsoGroup.Controllers
                     await userManager.AddToRoleAsync(appUser, roles?.Name);
                 }
             }
-           
+
             if (result.Succeeded)
             {
                 return Ok();
@@ -93,7 +91,7 @@ namespace SsoGroup.Controllers
 
         // tìm kiếm ng dùng theo user name
         [HttpGet]
-        public async Task<Users> FindByName([FromQuery]string userName)
+        public async Task<Users> FindByName([FromQuery] string userName)
         {
             if (!string.IsNullOrEmpty(userName))
             {
@@ -118,7 +116,7 @@ namespace SsoGroup.Controllers
 
         public IActionResult CreateRole() => View();
 
-       // Tạo role 
+        // Tạo role 
         [HttpPost]
         public async Task<IActionResult> CreateRole([Required] string name)
         {
@@ -162,13 +160,13 @@ namespace SsoGroup.Controllers
 
         //RemoveFromRole
         [HttpPost]
-        public async Task<bool> RemoveFromRole([FromBody]  RemoveFromRoleDto removeFromRoleDto)
+        public async Task<bool> RemoveFromRole([FromBody] RemoveFromRoleDto removeFromRoleDto)
         {
             if (!string.IsNullOrEmpty(removeFromRoleDto.RoleNameRemove) && removeFromRoleDto.Users != null)
             {
                 IdentityResult result = await userManager.RemoveFromRoleAsync(removeFromRoleDto.Users, removeFromRoleDto.RoleNameRemove);
-                if(result.Succeeded)
-                 return true;
+                if (result.Succeeded)
+                    return true;
                 return false;
             }
             return false;
@@ -187,6 +185,31 @@ namespace SsoGroup.Controllers
                 return false;
             }
             return false;
+        }
+
+        //UpdateFromRole
+        [HttpPost]
+        public async Task<bool> UpdateFromRole([FromBody] UpdateFromRoleDto updateFromRoleDto)
+        {
+            if (updateFromRoleDto.RoleIdUpdate != null && updateFromRoleDto.Users != null && updateFromRoleDto.RoleIdDelete != null)
+            {
+                foreach (var id in updateFromRoleDto.RoleIdDelete)
+                {
+                    Roles roleCheck = await roleManager.FindByIdAsync(id);
+                    IdentityResult result = await userManager.RemoveFromRoleAsync(updateFromRoleDto.Users, roleCheck?.Name);
+                    if (!result.Succeeded)
+                        return false;
+                }
+
+                foreach (var id in updateFromRoleDto.RoleIdUpdate)
+                {
+                    Roles roleCheck = await roleManager.FindByIdAsync(id);
+                    IdentityResult result = await userManager.AddToRoleAsync(updateFromRoleDto.Users, roleCheck?.Name);
+                    if (!result.Succeeded)
+                        return false;
+                }
+            }
+            return true;
         }
 
         // update user 
@@ -265,11 +288,11 @@ namespace SsoGroup.Controllers
                        audiences: new[] { "ApiTravele" }, claims
 
                        );
-                   // token = token.Remove('/');
+                    // token = token.Remove('/');
                     return Ok(token);
                 }
             }
-            
+
             return Unauthorized();
         }
         // Login

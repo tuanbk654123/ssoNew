@@ -75,6 +75,7 @@ namespace UserManager.Controllers
 
             //Map các trường update
             roleUpdate.Name = updateRoleDto.Name;
+            roleUpdate.Description = updateRoleDto.Description;
 
 
             bool result = await ssoGroupService.UpdateRoles(roleUpdate);

@@ -1,8 +1,8 @@
 .background{
   //display: flex;
   background-color: #f3f4f9;
+  
   min-height: 100vh;
-  width: fit-content;
   .title{
     width: 100%;
     font-size: 30px;
@@ -12,7 +12,6 @@
   }
   .datatable {
     height: 100vh;
-    //width: 100%;
     margin: 20px;
     background-color: white;
     border-radius: 20px;
@@ -157,13 +156,6 @@
   bottom:10px;
   right: 30px;
   width: 100%;
-}
-.row{
-  font-size: 12;
-  padding-top: 20px;
-  display: flex;
-  justify-content: center; // căn giữa ngang
-  align-items: center;// căn guair dọc
 }
 .btnAddHover:hover{
   background-color: #ffe0e0;

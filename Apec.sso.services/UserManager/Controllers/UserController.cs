@@ -95,27 +95,21 @@ namespace UserManager.Controllers
             userUpdate.UserName = updateUserDto.UserName;
             userUpdate.PhoneNumber = updateUserDto.PhoneNumber;
             userUpdate.Email = updateUserDto.Email;
+            userUpdate.IsActive = updateUserDto.IsActive;
+            //==============================================================
+            // update role của người dùng
+            UpdateFromRoleDto updateFromRoleDto = new UpdateFromRoleDto();
+            updateFromRoleDto.RoleIdDelete = new List<string>();
+            updateFromRoleDto.RoleIdUpdate = new List<string>();
 
-
-            // Update role 
-            // Delete all role
             foreach (var item in userUpdate.Roles)
             {
-                Roles role = await ssoGroupService.FindRoleById(item.ToString());
-                RemoveFromRoleDto removeFromRoleDto = new RemoveFromRoleDto();
-                removeFromRoleDto.Users = userUpdate;
-                removeFromRoleDto.RoleNameRemove = role?.Name;
-                await ssoGroupService.RemoveFromRole(removeFromRoleDto);
-            }
-            // Add new role 
-            foreach (var item in updateUserDto.RoleIds)
-            {
-                AddToRoleDto addToRoleDto = new AddToRoleDto();
-                addToRoleDto.Users = userUpdate;
-                addToRoleDto.RoleIdAdd = item;
-                await ssoGroupService.AddToRole(addToRoleDto);
+                updateFromRoleDto.RoleIdDelete.Add(item.ToString());
             }
 
+            updateFromRoleDto.RoleIdUpdate = updateUserDto.RoleIds;
+            updateFromRoleDto.Users = userUpdate;
+            await ssoGroupService.UpdateFromRole(updateFromRoleDto);
             //update
             bool result = await ssoGroupService.UpdateUser(userUpdate);
             if (result)

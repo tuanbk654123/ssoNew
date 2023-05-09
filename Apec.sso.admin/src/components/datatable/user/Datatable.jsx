@@ -177,16 +177,7 @@ const Datatable = () => {
     setPhoneNumber(e.target.value)
   }
   const handleChangeAddIsActice = (e) => {
-    //setPhoneNumber(e.target.value)
-    if(e === 'Active'){
-      setIsactive(true);
-    }
-    else if (e === 'InActive'){
-      setIsactive(false);
-    }
-    else{
-      setIsactive(null);
-    }
+      setIsactive(e);
   }
   
   //==========================================
@@ -375,7 +366,7 @@ const handleDelete =  async (id) => {
   // cột của Bảng==================================================================================
   const userColumns =[
     {
-      title: 'UserName',
+      title: 'Tên người dùng',
       width: 100,
       dataIndex: 'userName',
       key: 'UserName',
@@ -389,14 +380,14 @@ const handleDelete =  async (id) => {
       fixed: 'left',
     },
     {
-      title: 'phoneNumber',
+      title: 'Số điện thoại',
       dataIndex: 'phoneNumber',
       key: 'phoneNumber',
       width: 80,
     },
   
     {
-      title: 'Status',
+      title: 'Trạng thái',
       dataIndex: 'isActive',
       key: 'isActive',
       width: 50,
@@ -416,12 +407,12 @@ const handleDelete =  async (id) => {
     },
   
     {
-      title: 'Action',
+      title: 'Hành động',
       dataIndex: 'Action',
   
       key: 'operation',
       fixed: 'right',
-      width: 100,
+      width: 50,
       //render: () => <a>action</a>,
       render: (_, record) => {
               return (
@@ -447,24 +438,24 @@ const handleDelete =  async (id) => {
   // dropdown
   const menu = (
     <Menu
-      items={[
-        {
-          key: '1',
-          label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
-              Import
-            </a>
-          ),
-        },
-        {
-          key: '2',
-          label: (
-            <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-              Export
-            </a>
-          ),
-        }
-      ]}
+      // items={[
+      //   {
+      //     key: '1',
+      //     label: (
+      //       <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+      //         Import
+      //       </a>
+      //     ),
+      //   },
+      //   {
+      //     key: '2',
+      //     label: (
+      //       <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+      //         Export
+      //       </a>
+      //     ),
+      //   }
+      // ]}
     />
   );
 
@@ -492,7 +483,7 @@ const handleDelete =  async (id) => {
             </div>
         </div>
         <div className="datatableTitle">
-          <div className="total" >Tổng số :<b>{users.totalItem}</b> </div>
+          <div className="total" >Tổng số : <b>{users.totalItem}</b> </div>
      
           <div className="search">
           
@@ -592,7 +583,7 @@ const handleDelete =  async (id) => {
             </Col>
             <Col span={12}>
                 <label>Mật khẩu:</label>
-                <Input.Password placeholder="Nhập mật khẩu" value={Password}  onChange={onChangeAddPassword}  />
+                <Input.Password placeholder="Nhập mật khẩu" value={  Password } disabled={(addOrUpdate === 2)? true : false}  onChange={onChangeAddPassword}   />
             </Col>
           </Row>
           <Row className="row"  gutter={16}>
@@ -613,9 +604,9 @@ const handleDelete =  async (id) => {
             </Col>
             <Col span={12}>
                     <label>Loại:</label> <br/>
-                    <Select style={{width:"100%"}} placeholder="Chọn loại người dùng" defaultValue={Isactive} onChange={handleChangeAddIsActice}>
-                      <Option value="Active">Active</Option>
-                      <Option value="InActive">InActive</Option>
+                    <Select style={{width:"100%"}} placeholder="Chọn loại người dùng" value={Isactive} onChange={handleChangeAddIsActice}>
+                      <Option value={true}>Active</Option>
+                      <Option value={false}>InActive</Option>
                     </Select>
             </Col>
           </Row>
@@ -623,6 +614,7 @@ const handleDelete =  async (id) => {
             <Col span={24}>
                 <label>Quyền:</label>
                  <Transfer
+                  
                     dataSource={mockData}
                     showSearch
                     filterOption={filterOption}
