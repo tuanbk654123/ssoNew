@@ -1,11 +1,11 @@
 .list {
-    display: flex;
-    width: fit-content;
+    display: flex,block;
+    max-width: fit-content;
     background-color: #ffffff;
     .listContainer {
-      
-      //flex: 6;
-      max-width: 100%;
+      display: block;
+      width: auto;
+      flex: 1;
       background-color: #f9fbfd;
     }
   }

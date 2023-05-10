@@ -3,10 +3,11 @@
   
     background-color: #ffffff;
     .homeContainer {
-      //flex: 6;
+      flex: 1;
 
+      display: block;
+      width: auto;
       background-color: #f9fbfd;
-  
       .widgets,
       .charts {
         display: flex;

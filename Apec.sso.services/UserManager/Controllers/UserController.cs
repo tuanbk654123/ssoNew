@@ -11,7 +11,7 @@ using UserManager.Services.Interfaces;
 namespace UserManager.Controllers
 {
     [Route("api/users")]
-    //[Authorize]
+    [Authorize]
     [ApiController]
     public class UsersController : ControllerBase
     {

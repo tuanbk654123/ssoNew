@@ -2,13 +2,14 @@
 using DataAccess.Models.Dto;
 using DataAccess.Pagination.Base;
 using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserManager.Services.Interfaces;
 
 namespace UserManager.Controllers
 {
     [ApiController]
-    //[Authorize]
+    [Authorize]
     [Route("api/Clients")]
     public class ClientController : ControllerBase
     {
@@ -57,7 +58,7 @@ namespace UserManager.Controllers
             //ClientCreateCheck.Description = updateClientDto.Description;
             //ClientCreateCheck.ClientName = updateClientDto.ClientName;
             ClientCreateCheck = updateClientDto.Adapt<Clients>();
-            // Tạo Client
+            // Sửa Client
 
             bool result = await ClientService.Update(ClientCreateCheck);
 
@@ -78,7 +79,7 @@ namespace UserManager.Controllers
             //    var ClientDelete = await ssoGroupService.FindClientById(item);
             //    if (ClientDelete == null) return BadRequest("Quyền id: " + item + " không tồn tại");
             //}
-            // Xoá người dùng
+            // Xoá client
             foreach (var item in ListId)
             {
                 await ClientService.Delete(item);

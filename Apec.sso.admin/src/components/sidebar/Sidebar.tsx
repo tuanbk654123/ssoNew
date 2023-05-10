@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import "./sidebar.scss"
 import {
@@ -67,17 +67,20 @@ const items: MenuItem[] = [
 
 //=====================================================================================================================================
 type Props = {
-
+    openKey: string;
     isActiveHoverUser: boolean;
     isActiveHoverRole: boolean;
     isActiveHoverHistory: boolean;
     isActiveHoverClient: boolean;
+    isActiveHoverApiScopes:boolean;
     isActiveHoverTutorial: boolean;
     isActiveHoverLogout: boolean;
     isActiveHoverHome: boolean;
 }
 const Sidebar = (props: Props) => {
-
+    const [current, setCurrent] = useState('1');
+    const [openKeys, setOpenkey] = useState<string[]>([props.openKey]);
+    const rootKeys = ["sub1", "sub2",'sub3'];
     //=====================================================================================================================================
     const [collapsed, setCollapsed] = useState(false);
 
@@ -85,6 +88,35 @@ const Sidebar = (props: Props) => {
         setCollapsed(!collapsed);
     };
 
+    useEffect(() => {
+        if(props.isActiveHoverUser === true){
+            setCurrent('5');
+            setOpenkey(['sub1']);
+        }
+        if(props.isActiveHoverRole === true){
+            setCurrent('6');
+            setOpenkey(['sub1']);
+        }
+        if(props.isActiveHoverHistory === true){
+            setCurrent('7');
+            setOpenkey(['sub1']);
+        }
+
+        if(props.isActiveHoverClient === true){
+            setCurrent('9');
+            setOpenkey(['sub2']);
+        }
+
+        if(props.isActiveHoverApiScopes === true){
+            setCurrent('10');
+            setOpenkey(['sub2']);
+        }
+        
+        if(props.isActiveHoverLogout === true){
+            setCurrent('12');
+            setOpenkey(['sub3']);
+        }
+    }, [])
 
     const dispatch = useAppDispatch();
 
@@ -103,9 +135,13 @@ const Sidebar = (props: Props) => {
         handleLoginout();
         routeChange();
     };
-
+    
+   
     const onClick: MenuProps['onClick'] = (e) => {
         console.log('click ', e)
+        setCurrent(e.key);
+
+
         if(e.key === '5'){
             navigate.push('/users')
         }
@@ -118,13 +154,29 @@ const Sidebar = (props: Props) => {
         if(e.key === '9'){
             navigate.push('/client')
         }
+        if(e.key === '10'){
+            navigate.push('/apiScopes')
+        }
         if(e.key === '12'){
             signOut();
         }
     };
+    const onOpenChange = (items: any[]) => {
+        if(!collapsed){
+            const latestOpenKey = items.find(key => openKeys.indexOf(key) === -1);
+            if (rootKeys.indexOf(latestOpenKey) === -1) {
+                setOpenkey(items);
+            } else {
+                setOpenkey(latestOpenKey ? [latestOpenKey] : ['5']);
+            }
+        }
+        else{
+            setOpenkey(items);
+        }
+       
+      };
     return (
         <div style={{
-            //display:'flex',
             position:'relative',
             background:'#001529',
             width:collapsed ?"4vw":"13vw" 
@@ -137,17 +189,20 @@ const Sidebar = (props: Props) => {
                 preview= {false}
                 style={{ paddingRight:collapsed?'':'1.5vw',paddingLeft:collapsed?'':'1.5vw',marginTop:collapsed?'31px':'',marginBottom:collapsed?'60px':''}}
             />
-            <Button type="text" onClick={toggleCollapsed} style={{  height: '70px',  width :'30px', position:'absolute', top:'0px', right:'-32px' }}>
+            {/* <Button type="text" onClick={toggleCollapsed} style={{  height: '70px',  width :'30px', position:'absolute', top:'0px', right:'-32px' }}>
                 {collapsed ? <MenuUnfoldOutlined  /> : <MenuFoldOutlined />}
-            </Button>
+            </Button> */}
             <Menu
                 onClick={onClick}
+        
+                onOpenChange={onOpenChange}
                 style={{ height: "123vh" , width:collapsed ?"4vw":"13vw"  }}
-                defaultSelectedKeys={[]}
-                defaultOpenKeys={[]}
+                //defaultSelectedKeys={[]}
+                //defaultOpenKeys={['sub1']}
                 mode="inline"
                 theme="dark"
-                
+                selectedKeys={[current]}
+                openKeys={openKeys}
                 inlineCollapsed={collapsed}
                 items={items}
             />

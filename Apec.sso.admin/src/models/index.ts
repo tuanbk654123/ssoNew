@@ -9,3 +9,6 @@ export * from './userHistory'
 
 export * from './client'
 export * from './dto/searchClientDto'
+
+export * from './apiScopes'
+export * from './dto/searchApiScopesDto'

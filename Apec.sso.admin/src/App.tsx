@@ -12,6 +12,7 @@ import SigninOidc from './components/Layout/login/signin-oidc';
 import Role from './components/Layout/role/Role';
 import History from './components/Layout/history/History';
 import Client from './components/Layout/client/Client';
+import ApiScopes from './components/Layout/apiScopes/apiScopes';
 
 
 function App() {
@@ -39,6 +40,9 @@ function App() {
           </PrivateRoute>
           <PrivateRoute path="/client">
             <Client />
+          </PrivateRoute>
+          <PrivateRoute path="/apiScopes">
+            <ApiScopes />
           </PrivateRoute>
           <PrivateRoute path="/role">
             <Role />

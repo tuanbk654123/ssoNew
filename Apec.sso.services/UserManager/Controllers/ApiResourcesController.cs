@@ -1,36 +1,13 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using UserManager.Services.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-
-using System.Collections.Generic;
-using System.Linq;
-
-using Microsoft.Extensions.Configuration;
-using System.Security.Cryptography;
-using System;
-
-using Microsoft.Extensions.Caching.Distributed;
-using System.Net;
-
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http.Features;
-
-using System.Text;
-using DataAccess.Models;
-using Microsoft.AspNetCore.Identity;
-using DataAccess.Models.Dto;
+﻿using DataAccess.Models.Dto;
 using DataAccess.Pagination.Base;
-using UserManager.Services;
-using DataAccess.ExceptionFilter.Exceptions;
-using DataAccess.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using UserManager.Services.Interfaces;
 
 namespace UserManager.Controllers
 {
     [ApiController]
-    //[Authorize]
+    [Authorize]
     [Route("api/ApiResourcess")]
     public class ApiResourcesController : ControllerBase
     {

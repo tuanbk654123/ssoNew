@@ -6,6 +6,7 @@ import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { history } from '../utils/history';
 import userReducer from '../features/user/userSlice';
 import clientReducer from '../features/client/clientSlice';
+import apiScopesReducer from '../features/apiScopes/apiScopesSlice';
 import roleReducer from '../features/role/roleSlice';
 import userHistoryReducer  from '../features/history/historySlice';
 
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     user: userReducer,
     role: roleReducer,
     client: clientReducer,
+    apiScopes: apiScopesReducer,
     history: userHistoryReducer,
     router: connectRouter(history),
 })

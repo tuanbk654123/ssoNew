@@ -8,7 +8,7 @@ using UserManager.Services.Interfaces;
 namespace UserManager.Controllers
 {
     [Route("api/usersLogin")]
-    //[Authorize]
+    [Authorize]
     [ApiController]
     public class UserLoginController : ControllerBase
     {

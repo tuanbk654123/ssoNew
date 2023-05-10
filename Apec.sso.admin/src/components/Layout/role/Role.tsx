@@ -8,7 +8,7 @@ type Props = {}
 const Role = (props: Props) => {
   return (
     <div className="list">
-      <Sidebar isActiveHoverUser={false} isActiveHoverRole={true} isActiveHoverHistory={false} isActiveHoverClient={false}
+      <Sidebar openKey={'sub1'}  isActiveHoverUser={false} isActiveHoverRole={true} isActiveHoverHistory={false} isActiveHoverClient={false} isActiveHoverApiScopes={false}
         isActiveHoverTutorial={false} isActiveHoverLogout={false} isActiveHoverHome={false} />
       <div className="listContainer">
         <Navbar />

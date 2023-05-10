@@ -185,7 +185,7 @@ namespace SsoGroup.Extensions
             })
             .AddAspNetIdentity<Users>()
             .AddInMemoryApiScopes(apiScopes)
-            //.AddInMemoryApiResources(apiResources)
+            .AddInMemoryApiResources(apiResources)
             .AddInMemoryClients(clients)
             .AddInMemoryIdentityResources(identityServerSettings.IdentityResources)
              .AddProfileService<ProfileService>()

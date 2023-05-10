@@ -3,10 +3,9 @@
 
     background-color: #ffffff;
     .listContainer {
-      flex: 6;
-      // margin-top: 5px;
-      // margin-bottom: 5px;
-      // margin-right: 5px;
+      display: block;
+      width: auto;
+      flex: 1;
       background-color: #f9fbfd;
     }
   }

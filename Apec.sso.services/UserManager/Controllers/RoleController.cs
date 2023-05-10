@@ -2,13 +2,14 @@
 using DataAccess.Models.Dto;
 using DataAccess.Pagination.Base;
 using DataAccess.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserManager.Services.Interfaces;
 
 namespace UserManager.Controllers
 {
     [ApiController]
-    //[Authorize]
+    [Authorize]
     [Route("api/Roles")]
     public class RoleController : ControllerBase
     {

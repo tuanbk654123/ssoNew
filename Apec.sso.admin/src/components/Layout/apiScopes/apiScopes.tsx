@@ -1,14 +1,14 @@
 import React from 'react'
-import Datatable from '../../datatable/client/Datatable'
+import Datatable from '../../datatable/apiScopes/Datatable'
 import Navbar from '../../navbar/Navbar'
 import Sidebar from '../../sidebar/Sidebar'
-import "./client.scss"
+import "./apiScopes.scss"
 type Props = {}
 
-const Client = (props: Props) => {
+const ApiScopes = (props: Props) => {
   return (
     <div className="list">
-      <Sidebar openKey={'sub2'}  isActiveHoverUser={false} isActiveHoverRole={false} isActiveHoverHistory={false} isActiveHoverClient={true} isActiveHoverApiScopes={false}
+      <Sidebar openKey={'sub2'}  isActiveHoverUser={false} isActiveHoverRole={false} isActiveHoverHistory={false} isActiveHoverClient={false} isActiveHoverApiScopes={true}
         isActiveHoverTutorial={false} isActiveHoverLogout={false} isActiveHoverHome={false} />
       <div className="listContainer">
         <Navbar />
@@ -18,4 +18,4 @@ const Client = (props: Props) => {
   )
 }
 
-export default Client
+export default ApiScopes
