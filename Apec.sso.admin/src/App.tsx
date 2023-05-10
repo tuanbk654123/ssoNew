@@ -13,6 +13,7 @@ import Role from './components/Layout/role/Role';
 import History from './components/Layout/history/History';
 import Client from './components/Layout/client/Client';
 import ApiScopes from './components/Layout/apiScopes/apiScopes';
+import ApiResources from './components/Layout/apiResources/apiResources';
 
 
 function App() {
@@ -43,6 +44,9 @@ function App() {
           </PrivateRoute>
           <PrivateRoute path="/apiScopes">
             <ApiScopes />
+          </PrivateRoute>
+          <PrivateRoute path="/apiResources">
+            <ApiResources />
           </PrivateRoute>
           <PrivateRoute path="/role">
             <Role />

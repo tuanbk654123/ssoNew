@@ -12,3 +12,6 @@ export * from './dto/searchClientDto'
 
 export * from './apiScopes'
 export * from './dto/searchApiScopesDto'
+
+export * from './apiResources'
+export * from './dto/searchApiResourcesDto'

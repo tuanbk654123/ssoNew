@@ -21,7 +21,7 @@ function Home() {
   return (
     access_token !== null ?
       <div className='home'>
-        <Sidebar openKey={'sub1'}  isActiveHoverUser={false} isActiveHoverRole={false} isActiveHoverHistory={false} isActiveHoverClient={false} isActiveHoverApiScopes={false}
+        <Sidebar openKey={'sub1'}  isActiveHoverUser={false} isActiveHoverRole={false} isActiveHoverHistory={false} isActiveHoverClient={false} isActiveHoverApiScopes={false} isActiveHoverApiResources={false}
           isActiveHoverTutorial={false} isActiveHoverLogout={false} isActiveHoverHome={true} />
         <div className='homeContainer'>
           < Navbar />

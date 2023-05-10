@@ -7,6 +7,7 @@ import { history } from '../utils/history';
 import userReducer from '../features/user/userSlice';
 import clientReducer from '../features/client/clientSlice';
 import apiScopesReducer from '../features/apiScopes/apiScopesSlice';
+import apipResourcesReducer from '../features/apiResources/apiResourcesSlice';
 import roleReducer from '../features/role/roleSlice';
 import userHistoryReducer  from '../features/history/historySlice';
 
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
     role: roleReducer,
     client: clientReducer,
     apiScopes: apiScopesReducer,
+    apiResources: apipResourcesReducer,
     history: userHistoryReducer,
     router: connectRouter(history),
 })

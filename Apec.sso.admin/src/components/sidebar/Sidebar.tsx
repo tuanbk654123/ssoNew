@@ -55,8 +55,8 @@ const items: MenuItem[] = [
 
     getItem('Cấu hình', 'sub2', <AppstoreOutlined />, [
         getItem('Client', '9',<LaptopOutlined/>),
-        getItem('ApiScope', '10',<DesktopOutlined/>),
-        getItem('ApiResource', '11',<DesktopOutlined/>),
+        getItem('ApiScopes', '10',<DesktopOutlined/>),
+        getItem('ApiResources', '11',<DesktopOutlined/>),
         //getItem('Submenu', 'sub3', null, [getItem('Option 11', '11'), getItem('Option 12', '12')]),
     ]),
     getItem('Hành động', 'sub3', <LogoutOutlined />, [
@@ -73,6 +73,8 @@ type Props = {
     isActiveHoverHistory: boolean;
     isActiveHoverClient: boolean;
     isActiveHoverApiScopes:boolean;
+    isActiveHoverApiResources:boolean;
+    
     isActiveHoverTutorial: boolean;
     isActiveHoverLogout: boolean;
     isActiveHoverHome: boolean;
@@ -112,6 +114,10 @@ const Sidebar = (props: Props) => {
             setOpenkey(['sub2']);
         }
         
+        if(props.isActiveHoverApiResources === true){
+            setCurrent('11');
+            setOpenkey(['sub2']);
+        }
         if(props.isActiveHoverLogout === true){
             setCurrent('12');
             setOpenkey(['sub3']);
@@ -140,8 +146,6 @@ const Sidebar = (props: Props) => {
     const onClick: MenuProps['onClick'] = (e) => {
         console.log('click ', e)
         setCurrent(e.key);
-
-
         if(e.key === '5'){
             navigate.push('/users')
         }
@@ -156,6 +160,9 @@ const Sidebar = (props: Props) => {
         }
         if(e.key === '10'){
             navigate.push('/apiScopes')
+        }
+        if(e.key === '11'){
+            navigate.push('/apiResources')
         }
         if(e.key === '12'){
             signOut();

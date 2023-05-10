@@ -1,14 +1,14 @@
 import React from 'react'
-import Datatable from '../../datatable/role/Datatable'
+import Datatable from '../../datatable/apiResources/Datatable'
 import Navbar from '../../navbar/Navbar'
 import Sidebar from '../../sidebar/Sidebar'
-import "./role.scss"
+import "./apiResources.scss"
 type Props = {}
 
-const Role = (props: Props) => {
+const ApiResources = (props: Props) => {
   return (
     <div className="list">
-      <Sidebar openKey={'sub1'}  isActiveHoverUser={false} isActiveHoverRole={true} isActiveHoverHistory={false} isActiveHoverClient={false} isActiveHoverApiScopes={false} isActiveHoverApiResources={false}
+      <Sidebar openKey={'sub2'}  isActiveHoverUser={false} isActiveHoverRole={false} isActiveHoverHistory={false} isActiveHoverClient={false} isActiveHoverApiScopes={false} isActiveHoverApiResources={true}
         isActiveHoverTutorial={false} isActiveHoverLogout={false} isActiveHoverHome={false} />
       <div className="listContainer">
         <Navbar />
@@ -18,4 +18,4 @@ const Role = (props: Props) => {
   )
 }
 
-export default Role
+export default ApiResources

@@ -10,5 +10,7 @@ namespace UserManager.Repositories.Interfaces
     public interface IApiResourcesRepository : IMongoDbBase<ApiResources>
     {
         public Task<IPage<ApiResources>> Search(IPageable pageable, SearchApiResourceDto searchRoleDto);
+        public Task<List<ApiResources>> GetByName(string name, CancellationToken cancellationToken = default);
+        public Task<bool> Delete(string id);
     }
 }
