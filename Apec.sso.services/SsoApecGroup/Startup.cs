@@ -1,24 +1,20 @@
+﻿using DataAccess.Models;
+using DataAccess.Services;
+using DataAccess.Services.Interfaces;
+using IdentityServer4.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using SsoGroup.Settings;
-using SsoGroup.Models;
-using Microsoft.OpenApi.Models;
-using DataAccess.Models;
-using DataAccess.Services.Interfaces;
-using DataAccess.Services;
-using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http;
-using Microsoft.IdentityModel.Logging;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using IdentityServer4.Services;
-using IdentityServer4.Models;
 using SsoGroup.Extensions;
-using Microsoft.AspNetCore.Identity;
+using SsoGroup.Settings;
+using System;
 
 namespace SsoGroup
 {
@@ -94,9 +90,20 @@ namespace SsoGroup
                    options.Cookie.HttpOnly = true;
                    options.Cookie.SameSite = SameSiteMode.None;
                    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-               })
+               }).AddGoogle(googleOptions =>
+               {
+                   // Đọc thông tin Authentication:Google từ appsettings.json
+                   IConfigurationSection googleAuthNSection = Configuration.GetSection("Authentication:Google");
 
-           ;
+                   // Thiết lập ClientID và ClientSecret để truy cập API google
+                   googleOptions.ClientId = googleAuthNSection["ClientId"];
+                   googleOptions.ClientSecret = googleAuthNSection["ClientSecret"];
+                   // Cấu hình Url callback lại từ Google (không thiết lập thì mặc định là /signin-google)
+                   googleOptions.CallbackPath = "/dang-nhap-tu-google";
+
+               });
+
+            ;
             // add internal service 
             services.AddTransient<IUserManageService, UserManageService>();
 

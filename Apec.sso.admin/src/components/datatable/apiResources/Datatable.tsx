@@ -8,8 +8,8 @@ import { SearchOutlined,PlusOutlined,ExclamationCircleOutlined  } from '@ant-des
 import { 
   // AppstoreAddOutlined,
   BarsOutlined, ReloadOutlined    } from '@ant-design/icons';
-import { Pagination,Table,Button, Col, Drawer, Form, Input, Row, Space ,Modal, Select} from 'antd';
-import { ApiResources, SearchApiResourcesDto} from '../../../models/index'
+import { Pagination,Table,Button, Col, Drawer, Input, Row, Space ,Modal, Select, Transfer} from 'antd';
+import { ApiResources, ApiScopes, SearchApiResourcesDto} from '../../../models/index'
 import type { ColumnsType } from 'antd/es/table';
 import type { SelectProps } from 'antd';
 const { Option } = Select;
@@ -19,6 +19,8 @@ const { TextArea } = Input;
 
 const Datatable = (props: Props) => {
 
+
+
 //Innit state
 const [SearchParam, setSearchParam] = useState<SearchApiResourcesDto>({ 
   PageNumber:1,
@@ -27,7 +29,7 @@ const [SearchParam, setSearchParam] = useState<SearchApiResourcesDto>({
   Name:"",
 } );
 const [ApiResourcesAddOrEdit, setApiResourcesAddOrEdit] = useState<ApiResources>({
-
+  scopes: [],
   name:"",
   id:""
 } 
@@ -35,7 +37,8 @@ const [ApiResourcesAddOrEdit, setApiResourcesAddOrEdit] = useState<ApiResources>
 //state open adduser
 const [open, setOpen] = useState(false);
 const [Title, setTitle] = useState("");
-
+const [mockData, setMockData] = useState<any>([]);
+const [targetKeys, setTargetKeys] = useState<any>([]);
 // add or Update
 const [addOrUpdate, setaddOrUpdate] = useState(0);// 1 is add , 2 is update
 
@@ -50,7 +53,10 @@ useEffect(() => {
 
   // lấy data từ reducer 
   const apiResourcess = useAppSelector((state) => state.apiResources.lstRespone)  ;
+  const apiScopes = useAppSelector((state) => state.apiScopes.lstRespone)  ;
   console.log("Datatable apiResourcess = "+ JSON.stringify(apiResourcess) );
+  console.log("Datatable apiScopes = "+ JSON.stringify(apiScopes) );
+
 
   //Thay đổi Size chage
   const onShowSizeChange = (current : number, pageSize: number) => {
@@ -73,7 +79,7 @@ useEffect(() => {
       name:e.target.value
     } )
   }
-
+  const filterOption = (inputValue: any, option: any) => option.description.indexOf(inputValue) > -1;
   //==========================================
   //search
   const onChangeUserName = (e : any) => {
@@ -101,9 +107,22 @@ useEffect(() => {
 // Show Add user 
   const showDrawer = () => {
     //init state 
+    //const tempTargetKeys =  [];
+    const tempMockData =  [];
+    for (let i = 0; i < apiScopes?.content?.length; i++) {
+      const data = {
+        key: apiScopes?.content?.[i].id,
+        title: apiScopes?.content?.[i].name,
+      };
+      //tempTargetKeys.push(data.key);
+      tempMockData.push(data);
+    }
+
+    setMockData(tempMockData);
+    setTargetKeys([]);
     setApiResourcesAddOrEdit({
       ...ApiResourcesAddOrEdit,
-
+      scopes:[],
       name:""
     })
     // setState add or up date
@@ -115,6 +134,27 @@ useEffect(() => {
   // Show edit apiResources 
    const showEditDrawer = (record: ApiResources) => {
     //init state 
+    const tempTargetKeys = [];
+    const tempMockData = [];
+    for (let i = 0; i < apiScopes?.content?.length; i++) {
+      const data = {
+        key: apiScopes?.content?.[i].id,
+        title: apiScopes?.content?.[i].name,
+      };
+      tempMockData.push(data);
+    }
+    for (let i = 0; i < record?.scopes?.length; i++) {
+      for (let i = 0; i < apiScopes?.content?.length; i++) {
+        if( apiScopes?.content?.[i].name === record?.scopes?.[i] ){
+          tempTargetKeys.push(apiScopes?.content?.[i].id);
+        }
+        tempTargetKeys.push(record?.scopes?.[i]);
+      }
+    }
+    setMockData(tempMockData);
+    //console.log("tempMockData: ",JSON.stringify(tempMockData));
+    setTargetKeys(tempTargetKeys);
+
       setApiResourcesAddOrEdit({
         ...ApiResourcesAddOrEdit,
 
@@ -133,8 +173,9 @@ useEffect(() => {
     // add
     if(addOrUpdate === 1){
       const addapiResources = {
-        id:'',
-        name:  ApiResourcesAddOrEdit?.name,
+        id:ApiResourcesAddOrEdit?.id,
+        name: ApiResourcesAddOrEdit?.name,
+        scopes:ApiResourcesAddOrEdit?.scopes,
       }
       const lstApiResourcess = [addapiResources];
       await dispatch( apiResourcesAction.addApiResources(lstApiResourcess));
@@ -145,7 +186,7 @@ useEffect(() => {
       const UpdateApiResources = {
         id:ApiResourcesAddOrEdit?.id,
         name: ApiResourcesAddOrEdit?.name,
-
+        scopes:ApiResourcesAddOrEdit?.scopes,
       } 
       await dispatch(apiResourcesAction.updateApiResources(UpdateApiResources));
 
@@ -218,6 +259,20 @@ const handleDelete =  async (id: string) => {
     },
     
   ];
+  const handleChangeRole = (newTargetKeys: any) => {
+
+    setTargetKeys(newTargetKeys);
+    setApiResourcesAddOrEdit({
+      ... ApiResourcesAddOrEdit,
+      scopes:newTargetKeys
+    }
+    
+    );
+    //setRolesAdd(newTargetKeys);
+  };
+  const handleSearch = (dir: any, value: any) => {
+    console.log('search:', dir, value);
+  };
 
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
@@ -298,16 +353,25 @@ const handleDelete =  async (id: string) => {
 
         <Row className="row"  gutter={16}>
           <Col span={24}>
-            <label>Tên apiResources:</label>
+            <label>Tên:</label>
             <Input placeholder="Nhập tên apiResources"  value={ApiResourcesAddOrEdit.name} onChange={onChangeAddApiResourcesName} />    
           </Col>
         </Row>
-        {/* <Row className="row"  gutter={16}>
-          <Col span={24}>
-            <label>ApiResourcesId:</label>
-            <Input placeholder="apiResourcesId"  value={ApiResourcesAddOrEdit.apiResourcesId} onChange={onChangeAddApiResourcesId} />    
-          </Col>
-        </Row> */}
+        <Row className="row"  gutter={16}>
+            <Col span={24}>
+                <label>ApiScopes:</label>
+                 <Transfer
+                  
+                    dataSource={mockData}
+                    showSearch
+                    filterOption={filterOption}
+                    targetKeys={targetKeys}
+                    onChange={handleChangeRole}
+                    onSearch={handleSearch}
+                    render={(item) => item.title}
+                  />
+            </Col>
+          </Row>
        
       <div className="Submit">
         <Space style={{display:'flex'  }}>

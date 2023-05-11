@@ -1,4 +1,4 @@
-import React from 'react'
+
 import "./datatable.scss";
 import { useEffect, useState } from "react";
 import { apiScopesAction} from '../../../features/apiScopes/apiScopesSlice';
@@ -18,7 +18,6 @@ const options: SelectProps['options'] = [];
 const { TextArea } = Input;
 
 const Datatable = (props: Props) => {
-
 //Innit state
 const [SearchParam, setSearchParam] = useState<SearchApiScopesDto>({ 
   PageNumber:1,
@@ -50,6 +49,7 @@ useEffect(() => {
 
   // lấy data từ reducer 
   const apiScopess = useAppSelector((state) => state.apiScopes.lstRespone)  ;
+
   console.log("Datatable apiScopess = "+ JSON.stringify(apiScopess) );
 
   //Thay đổi Size chage
@@ -310,7 +310,7 @@ const handleDelete =  async (id: string) => {
             <Input placeholder="apiScopesId"  value={ApiScopesAddOrEdit.apiScopesId} onChange={onChangeAddApiScopesId} />    
           </Col>
         </Row> */}
-       
+
       <div className="Submit">
         <Space style={{display:'flex'  }}>
             <Button  onClick={onClose}>Cancel</Button>
